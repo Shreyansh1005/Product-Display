@@ -1,69 +1,84 @@
-Product Display Web Application with Barcode Scanner
-Overview
-This is a product display web application that showcases products, allows users to toggle between light and dark modes, and integrates a barcode scanning feature to add products to the shopping list or look them up in the database.
+Product Display Web Application
+This web application showcases a list of products, featuring dark mode support, pagination, and a barcode scanner integration for convenient product lookup and adding products to a list. It's built using React.js for the frontend and Node.js with MongoDB for the backend.
 
-Features
-Product Display: Displays a list of products with details like price, name, and image.
-Dark Mode Toggle: Switch between light and dark themes for better user experience.
-Barcode Scanning: Uses a barcode scanner to add products to the user's shopping list or look up products in the database.
-Prerequisites
-Before you begin, ensure that you have the following installed:
+Table of Contents
+Setup Instructions
+Running the Application
+API Endpoints
+Design Decisions
+Challenges Faced and Solutions
+Setup Instructions
+Follow these steps to set up the application on your local machine:
 
-Node.js (v14.x or higher)
-npm (Node Package Manager)
-Git (for version control)
-A code editor (VSCode or similar)
-Step-by-Step Setup
-1. Clone the Repository
-First, clone the repository to your local machine. Run the following command in your terminal:
+Clone the Repository:
 
 git clone https://github.com/Shreyansh1005/Product-Display.git
-2. Install Dependencies
-Navigate to the project directory and install the required dependencies:
-
 cd Product-Display
+Install Dependencies:
+
+For the frontend:
+cd frontend
 npm install
-This will install all the necessary dependencies listed in the package.json file.
+For the backend:
+cd ../backend
+npm install
+Environment Variables:
 
-3. Run the Application
-Start the application in development mode using:
+Create a .env file in the backend directory and set your environment variables:
+MONGO_URI=your_mongodb_connection_string
+PORT=your_preferred_port
+Run the Application:
 
+Start the backend server:
+cd backend
 npm start
-This will start a local development server, usually accessible at http://localhost:3000/.
+Start the frontend server:
+cd ../frontend
+npm start
+Open the Application:
 
-4. Access the Application
-Open your browser and go to http://localhost:3000/ to see the application running. You should see the product list with the option to toggle between light and dark modes.
+Navigate to http://localhost:3000 in your browser.
+API Endpoints
+Product Endpoints
+GET /api/products
+Description: Fetches a list of all products.
+Response: Array of product objects.
+POST /api/products
+Description: Adds a new product.
+Body Parameters: product_id, product_name, category, price, etc.
+GET /api/products/
+Description: Fetches details of a specific product.
+URL Parameter: id - The ID of the product.
+PUT /api/products/
+Description: Updates a product's details.
+URL Parameter: id - The ID of the product.
+Body Parameters: Fields to be updated.
+DELETE /api/products/
+Description: Deletes a product from the database.
+URL Parameter: id - The ID of the product.
+Barcode Scanner Endpoint
+POST /api/barcode/scan
+Description: Scans a barcode and returns the associated product information.
+Body Parameters: barcode - The barcode data.
+Design Decisions
+User Interface: The design focuses on a clean, modern UI with a dark mode option for better user experience.
+Barcode Scanner: We integrated a barcode scanning feature using a third-party library to facilitate quick product lookup.
+Pagination: Implemented to handle large product datasets efficiently and improve the application's performance.
+Responsive Design: The entire layout is responsive, ensuring a seamless experience on different devices.
+Challenges Faced and Solutions
+Data Fetching and Handling Delays:
 
-5. Test Barcode Scanning Feature
-To test the barcode scanning feature:
+Problem: Fetching product data from the database sometimes caused noticeable delays.
+Solution: Optimized API calls and implemented loading spinners to improve the user experience.
+Barcode Scanner Integration:
 
-Open the browser's console (Right-click → Inspect → Console).
-Scan a barcode using a barcode scanner.
-If integrated properly, the scanner should process the barcode input and show the product details or add the product to your shopping list.
-Troubleshooting and Challenges Faced
-1. Issue with Barcode Scanning Library
-Problem: Initially, there were compatibility issues with the barcode scanning library when trying to integrate it into the React project.
-Solution: After researching, we decided to use the react-qr-barcode-scanner library, which provided seamless integration with React. We also made sure to configure the scanner in a separate component, handling the barcode scanning logic properly.
-2. Dark Mode Toggle Not Working Initially
-Problem: The dark mode toggle wasn't functioning as expected due to issues in state management. The theme was not updating properly after clicking the toggle button.
-Solution: We ensured that the state for dark mode was correctly set up using useState and added conditional class names for styling changes based on the dark mode state. We also included a transition effect to smoothen the change between light and dark modes.
-3. Pagination Issue
-Problem: Pagination wasn't working as expected, and the "Next" and "Previous" buttons were not disabling correctly.
-Solution: We carefully reviewed the pagination logic and adjusted the conditions that controlled the disabled state of the buttons. We made sure that the page index correctly reflected the current state of the data.
-4. Responsive Layout Challenges
-Problem: The application wasn't fully responsive, especially on smaller screens, which led to a poor user experience on mobile devices.
-Solution: We used media queries and adjusted the grid layout for product display and pagination buttons. We also optimized the barcode scanner and other components to be more adaptable to different screen sizes.
-Technologies Used
-React: A JavaScript library for building user interfaces.
-react-qr-barcode-scanner: Library for barcode scanning.
-CSS: Styling and layout using pure CSS.
-Node.js: Runtime environment for running the app.
-npm: Package manager to install and manage dependencies.
-Future Improvements
-Barcode Product Search: Enhance the barcode scanner to directly search the product database using the barcode information.
-User Authentication: Add user authentication features so that users can save their shopping list and preferences.
-Mobile App Integration: Extend this web app functionality to a mobile application for barcode scanning in real-world scenarios.
-Conclusion
-This application integrates multiple features, including product display, dark mode, and barcode scanning, to create a fully functional and responsive web application. By using modern technologies like React and react-qr-barcode-scanner, we were able to deliver a user-friendly experience, though some challenges were faced and resolved during the development process.
+Problem: Ensuring compatibility and smooth functionality across different devices and browsers.
+Solution: Used a well-documented barcode scanning library and tested extensively on multiple platforms.
+Dark Mode Implementation:
 
-We hope this guide helps you in understanding the app and its setup.
+Problem: Maintaining consistent styling between light and dark modes was tricky.
+Solution: Carefully crafted CSS rules with transition properties for smooth mode switching.
+Handling Pagination:
+
+Problem: Implementing pagination efficiently for a large dataset.
+Solution: Used array slicing and conditional rendering to load only the necessary items for each page.
